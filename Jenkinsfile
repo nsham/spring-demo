@@ -1,35 +1,22 @@
-pipeline {
-    agent {
-        docker {
-            image 'maven:3-alpine'
-            args '-v /root/.m2:/root/.m2'
+node {
+    stage('Build') {
+        echo 'Building...'
+    }
+    stage('Scan') {
+        echo 'Scanning...'
+        try {
+            sh 'mvn -DskipTests clean install sonar:sonar'
+            sh 'make check'
+        }
+        finally {
+            junit 'target/surefire-reports/*.xml'
         }
     }
-    stages {
-        stage('Build') {
-            steps {
-                sh 'mvn -B -DskipTests clean package'
-            }
-        }
-        stage('Sonar Scan') {
-            steps {
-                sh 'mvn -X -DskipTests clean install sonar:sonar'
-            }
-        }
-//        stage('Test') {
-//            steps {
-//                sh 'mvn test'
-//            }
-//            post {
-//                always {
-//                    junit 'target/surefire-reports/*.xml'
-//                }
-//            }
-//        }
-        stage('Deliver') {
-            steps {
-                sh './jenkins/scripts/deliver.sh'
-            }
-        }
+    stage('Test') {
+        echo 'Building...'
+    }
+    stage('Deploy') {
+        echo 'Deploying...'
+        sh 'deliver.sh'
     }
 }
