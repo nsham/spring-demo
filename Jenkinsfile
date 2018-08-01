@@ -1,7 +1,7 @@
 node {
-    sh 'docker attach jenkins-blueocean'
     /* Requires the Docker Pipeline plugin to be installed */
     docker.image('maven:3-alpine').inside('-v $HOME/.m2:/root/.m2') {
+        sh 'docker network connect sonarnet jenkins-blueocean'
         stage('Build') {
             echo 'Building...'
             sh 'mvn --version'
