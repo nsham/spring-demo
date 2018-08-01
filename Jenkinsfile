@@ -9,7 +9,7 @@ node {
         stage('Scan') {
             echo 'Scanning...'
             try {
-                sh 'mvn -DskipTests clean install sonar:sonar'
+                sh 'mvn -DskipTests clean install sonar:sonar -Dsonar.host.url=${env.SONARQUBE_HOST}'
                 sh 'make check'
             }
             finally {
