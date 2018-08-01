@@ -13,7 +13,7 @@ pipeline {
         }
         stage('Sonar Scan') {
             steps {
-                sh 'mvn -X clean install sonar:sonar'
+                sh 'mvn -X -DskipTests clean install sonar:sonar'
             }
         }
 //        stage('Test') {
