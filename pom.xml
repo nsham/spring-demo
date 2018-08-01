@@ -33,9 +33,6 @@
 		</profile>
 	</profiles>
 
-
-
-
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
