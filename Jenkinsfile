@@ -1,6 +1,6 @@
 node {
     /* Requires the Docker Pipeline plugin to be installed */
-    docker.image('maven:3-alpine').inside('-v $HOME/.m2:/root/.m2 --net bridge') {
+//    docker.image('maven:3-alpine').inside('-v $HOME/.m2:/root/.m2 --net bridge') {
         stage('Build') {
             echo 'Building...'
 //            sh 'mvn --version'
@@ -23,5 +23,5 @@ node {
             echo 'Deploying...'
             sh 'deliver.sh'
         }
-    }
+//    }
 }
