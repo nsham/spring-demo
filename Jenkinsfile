@@ -7,16 +7,11 @@ node {
         }
         stage('Scan') {
             echo 'Scanning...'
-            try {
                 sh 'mvn -DskipTests clean install sonar:sonar'
-            }
-            finally {
-                echo 'Reporting...'
-                junit 'target/surefire-reports/*.xml'
-            }
         }
         stage('Test') {
-            echo 'Building...'
+            echo 'Testing...'
+            junit 'build/reports/**/*.xml'
         }
         stage('Deploy') {
             echo 'Deploying...'
