@@ -23,7 +23,9 @@ node {
         }
         stage('Deploy') {
             echo 'Deploying...'
-            sh 'deliver.sh'
+            sh 'mvn jar:jar install:install'
+            sh 'java -jar target/demo-0.0.1-SNAPSHOT.jar'
+//            sh '.deliver.sh'
         }
     }
 }
