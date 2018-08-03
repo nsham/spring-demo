@@ -21,7 +21,7 @@ node {
         }
         stage('Deploy') {
             echo 'Deploying...'
-            sh 'deliver.sh'
+//            sh 'deliver.sh'
         }
     }
 }
