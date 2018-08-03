@@ -9,11 +9,10 @@ node {
             echo 'Scanning...'
             try {
                 sh 'mvn -DskipTests clean install sonar:sonar'
-//                sh 'make check'
             }
             finally {
                 echo 'Reporting...'
-//                junit 'target/surefire-reports/*.xml'
+                junit 'target/surefire-reports/*.xml'
             }
         }
         stage('Test') {
@@ -21,7 +20,7 @@ node {
         }
         stage('Deploy') {
             echo 'Deploying...'
-//            sh 'deliver.sh'
+            sh 'deliver.sh'
         }
     }
 }
