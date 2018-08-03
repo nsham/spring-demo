@@ -10,8 +10,16 @@ node {
                 sh 'mvn -DskipTests clean install sonar:sonar'
         }
         stage('Test') {
-            echo 'Testing...'
-            junit 'build/reports/**/*.xml'
+            try {
+                echo 'Testing...'
+                junit '**/target/*.xml'
+            } catch (err) {
+                if (currentBuild.result == 'UNSTABLE' || currentBuild.result == 'FAILURE')
+                    throw err
+            } finally {
+                echo 'Testing..Done'
+            }
+
         }
         stage('Deploy') {
             echo 'Deploying...'
