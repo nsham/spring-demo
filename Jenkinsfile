@@ -3,21 +3,21 @@ node {
     docker.image('maven:3-alpine').inside('-v $HOME/.m2:/root/.m2 --network container:sonarqube') {
         stage('Build') {
             echo 'Building...'
-//            sh 'mvn --version'
+            sh 'mvn --version'
+            sh 'mvn -X clean install'
         }
         stage('Scan') {
             echo 'Scanning...'
-                sh 'mvn -DskipTests clean install sonar:sonar'
+                sh 'mvn -DskipTests sonar:sonar'
         }
         stage('Test') {
             try {
                 echo 'Testing...'
-                junit '**/target/*.xml'
-            } catch (err) {
-                if (currentBuild.result == 'UNSTABLE' || currentBuild.result == 'FAILURE')
-                    throw err
+                sh 'mvn -X test'
             } finally {
                 echo 'Testing..Done'
+                archiveArtifcats artifacts: 'build/libs/**/*.jar', fingerprint: true
+                junit 'build/reports/**/*.xml'
             }
 
         }
