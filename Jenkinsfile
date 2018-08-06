@@ -17,7 +17,7 @@ node {
             } finally {
                 echo 'Testing..Done'
                 archiveArtifcats artifacts: 'build/libs/**/*.jar', fingerprint: true
-                junit 'build/reports/**/*.xml'
+//                junit 'build/reports/**/*.xml'
             }
 
         }
